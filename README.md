@@ -8,8 +8,8 @@ Landing page profesional para salón de eventos, construida con HTML5, CSS3 y Ja
 
 ---
 
-![Sitio Web](https://img.shields.io/badge/Sitio_Web-Live-brightgreen?style=for-the-badge&logo=github)
-[Ver Demo](https://salon-carmin.netlify.app/#)
+## DEMO
+[Salón Carmín](https://salon-carmin.netlify.app/#)
 
 ---
 ## Características
