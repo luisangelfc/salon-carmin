@@ -10,7 +10,7 @@ Landing page profesional para salón de eventos, construida con HTML5, CSS3 y Ja
 
 ## DEMO
 
-    salon-carmin.netlify.app
+    https://salon-carmin.netlify.app
 
 ---
 ## Características
