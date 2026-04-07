@@ -3,18 +3,16 @@
 ![HTML5](https://img.shields.io/badge/HTML5-E34F26?style=flat&logo=html5&logoColor=white)
 ![CSS3](https://img.shields.io/badge/CSS3-1572B6?style=flat&logo=css3&logoColor=white)
 ![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=flat&logo=javascript&logoColor=black)
-![Sin frameworks](https://img.shields.io/badge/Sin%20frameworks-Vanilla-black?style=flat)
 
 Landing page profesional para salón de eventos, construida con HTML5, CSS3 y JavaScript vanilla. Orientada a generación de leads y conversión directa vía WhatsApp.
 
 ---
 
-## Vista previa
+## DEMO
 
-> Próximamente: captura de pantalla del proyecto en desktop y móvil.
+    salon-carmin.netlify.app
 
 ---
-
 ## Características
 
 - **Integración real con WhatsApp** — el formulario captura todos los datos del cliente y construye un mensaje estructurado automáticamente, enviándolo directo al número del negocio
@@ -50,11 +48,7 @@ salon-carmin/
 │   └── main.js
 ├── assets/
 │   └── images/
-│       ├── hero.jpg               ← Foto principal (portada)
-│       ├── nosotros.jpg           ← Sección quiénes somos
-│       ├── salon-imperial.jpg     ← Salón Imperial Carmín (hasta 500 personas)
-│       ├── salon-intimo.jpg       ← Salón Íntimo Carmín (hasta 150 personas)
-│       └── g1.jpg … g6.jpg       ← Galería animada
+│       .... 
 └── README.md
 ```
 
