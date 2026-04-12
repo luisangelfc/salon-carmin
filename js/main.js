@@ -12,7 +12,7 @@
 // ── CONFIG ────────────────────────────────
 const CONFIG = {
   // ⚠️ CAMBIAR: número real de WhatsApp (código país + número sin +)
-  WA_NUMBER: '525534731585',
+  WA_NUMBER: '525580773545',
   // Nombre del negocio para el mensaje automático
   NEGOCIO: 'Salón Carmín',
 };
