@@ -309,7 +309,7 @@ h1, h2, h3, h4 {
 .hero-bg {
   position: absolute;
   inset: 0;
-  background-image: url('../assets/images/hero.jpg');
+  background-image: url('../assets/images/webp/hero.webp');
   background-size: cover;
   background-position: center;
   background-attachment: fixed;
