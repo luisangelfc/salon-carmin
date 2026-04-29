@@ -34,7 +34,12 @@
 /* ===== RESET & BASE ===== */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-html { scroll-behavior: smooth; font-size: 16px; }
+html {
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+  font-size: 16px;
+  overflow-x: hidden;
+}
 
 body {
   background-color: var(--negro);
@@ -43,10 +48,16 @@ body {
   font-weight: 300;
   line-height: 1.7;
   overflow-x: hidden;
+  width: 100%;
+  position: relative;
 }
 
 img { display: block; max-width: 100%; }
-a { text-decoration: none; color: inherit; }
+a, button {
+  text-decoration: none;
+  color: inherit;
+  touch-action: manipulation;
+}
 ul { list-style: none; }
 
 /* ===== TIPOGRAFÍA ===== */
@@ -407,6 +418,7 @@ h1, h2, h3, h4 {
   opacity: 0;
   transform: translateY(40px);
   transition: opacity 0.7s ease, transform 0.7s ease;
+  will-change: transform, opacity;
 }
 .reveal-left  { transform: translateX(-40px); }
 .reveal-right { transform: translateX(40px); }
@@ -515,6 +527,7 @@ h1, h2, h3, h4 {
   border-radius: var(--radius-lg);
   overflow: hidden;
   transition: transform var(--transition), box-shadow var(--transition), border-color var(--transition);
+  will-change: transform, box-shadow, border-color;
 }
 .card:hover {
   transform: translateY(-8px);
@@ -598,6 +611,7 @@ h1, h2, h3, h4 {
   border-radius: var(--radius-lg);
   transition: all var(--transition);
   cursor: default;
+  will-change: transform, background-color, border-color;
 }
 .evento-item:hover {
   border-color: var(--dorado);
@@ -672,6 +686,7 @@ h1, h2, h3, h4 {
   padding: 2.5rem;
   position: relative;
   transition: all var(--transition);
+  will-change: transform, border-color, box-shadow;
 }
 .paquete-card:hover { border-color: var(--borde-hover); transform: translateY(-4px); }
 .paquete-card.featured {
