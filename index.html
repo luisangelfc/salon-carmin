@@ -17,7 +17,7 @@
   <header id="header" class="header">
     <div class="container nav-container">
       <a href="#" class="logo">
-      <img src="assets/images/webp/logo.webp" alt="Salón Carmín logo" class="logo-img">
+      <img src="assets/images/webp/logo.webp" alt="Salón Carmín logo" class="logo-img" fetchpriority="high" loading="eager">
       <span class="logo-text">Salón <em>Carmín</em></span>
     </a>
       <nav class="nav-links" id="navLinks">
@@ -63,7 +63,7 @@
     <div class="container nosotros-grid">
       <div class="nosotros-visual reveal-left">
         <div class="nosotros-img-frame">
-          <div class="nosotros-img" style="background-image:url('assets/images/webp/nosotros.webp')"></div>
+          <div class="nosotros-img lazy-bg" data-bg="url('assets/images/webp/nosotros.webp')"></div>
           <div class="nosotros-badge">
             <span class="badge-number">+2,000</span>
             <span class="badge-label">eventos realizados</span>
@@ -93,7 +93,7 @@
       <div class="cards-grid cards-grid--two">
  
         <div class="card reveal">
-          <div class="card-img" style="background-image:url('assets/images/webp/salon-imperial.webp')">
+          <div class="card-img lazy-bg" data-bg="url('assets/images/webp/salon-imperial.webp')">
             <div class="card-img-overlay"></div>
             <span class="card-badge">Hasta 400 personas</span>
           </div>
@@ -111,7 +111,7 @@
         </div>
  
         <div class="card reveal">
-          <div class="card-img" style="background-image:url('assets/images/webp/salon-intimo.webp')">
+          <div class="card-img lazy-bg" data-bg="url('assets/images/webp/salon-intimo.webp')">
             <div class="card-img-overlay"></div>
             <span class="card-badge">Hasta 150 personas</span>
           </div>
@@ -175,16 +175,16 @@
   <!-- ===== GALERÍA STRIP ===== -->
   <div class="galeria-strip">
     <div class="galeria-track">
-      <div class="galeria-item" style="background-image:url('assets/images/webp/g1.webp')"></div>
-      <div class="galeria-item" style="background-image:url('assets/images/webp/g2.webp')"></div>
-      <div class="galeria-item" style="background-image:url('assets/images/webp/g3.webp')"></div>
-      <div class="galeria-item" style="background-image:url('assets/images/webp/g4.webp')"></div>
-      <div class="galeria-item" style="background-image:url('assets/images/webp/g5.webp')"></div>
-      <div class="galeria-item" style="background-image:url('assets/images/webp/g6.webp')"></div>
+      <div class="galeria-item lazy-bg" data-bg="url('assets/images/webp/g1.webp')"></div>
+      <div class="galeria-item lazy-bg" data-bg="url('assets/images/webp/g2.webp')"></div>
+      <div class="galeria-item lazy-bg" data-bg="url('assets/images/webp/g3.webp')"></div>
+      <div class="galeria-item lazy-bg" data-bg="url('assets/images/webp/g4.webp')"></div>
+      <div class="galeria-item lazy-bg" data-bg="url('assets/images/webp/g5.webp')"></div>
+      <div class="galeria-item lazy-bg" data-bg="url('assets/images/webp/g6.webp')"></div>
       <!-- Duplicados para loop continuo -->
-      <div class="galeria-item" style="background-image:url('assets/images/webp/g1.webp')"></div>
-      <div class="galeria-item" style="background-image:url('assets/images/webp/g2.webp')"></div>
-      <div class="galeria-item" style="background-image:url('assets/images/webp/g3.webp')"></div>
+      <div class="galeria-item lazy-bg" data-bg="url('assets/images/webp/g1.webp')"></div>
+      <div class="galeria-item lazy-bg" data-bg="url('assets/images/webp/g2.webp')"></div>
+      <div class="galeria-item lazy-bg" data-bg="url('assets/images/webp/g3.webp')"></div>
     </div>
   </div>
 

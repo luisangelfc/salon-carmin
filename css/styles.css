@@ -1079,10 +1079,7 @@ input.error, select.error, textarea.error {
   50%       { box-shadow: 0 4px 35px rgba(37, 211, 102, 0.6), 0 0 0 8px rgba(37,211,102,0.1); }
 }
 
-/* ===== LÍNEA DECORATIVA ===== */
-.section-title::after {
-  display: none; /* Eliminado — sobrecarga visualmente */
-}
+
 
 /* ===== RESPONSIVE ===== */
 @media (max-width: 1024px) {
@@ -1149,9 +1146,26 @@ input.error, select.error, textarea.error {
 }
 
 @media (max-width: 480px) {
-  .container { padding: 0 1.25rem; }
+  .container { padding: 0 1.5rem; }
   .hero-title { font-size: 2.4rem; }
-  .form { padding: 1.75rem 1.25rem; }
-  .paquete-card { padding: 2rem 1.5rem; }
-  .whatsapp-float { bottom: 1.25rem; right: 1.25rem; }
+  .form { padding: 2rem 1.5rem; }
+  .paquete-card { padding: 2.5rem 1.5rem; }
+  .whatsapp-float { bottom: 1.5rem; right: 1.5rem; }
+  .body-text, .section-desc, .card-desc { font-size: 0.95rem; line-height: 1.8; }
+}
+
+/* ===== OPTIMIZACIÓN TÁCTIL ===== */
+.btn, .hamburger, .footer-social a {
+  min-height: 44px;
+  min-width: 44px;
+  justify-content: center;
+}
+.nav-links a, .footer-links a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+}
+.btn:active, .card:active, .paquete-card:active, .evento-item:active, .footer-social a:active {
+  transform: scale(0.97);
+  transition: transform 0.1s cubic-bezier(0.4, 0, 0.2, 1);
 }

@@ -25,6 +25,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initHeroBg();
   initPaqueteCTAs();
   initContactForm();
+  initLazyBackgrounds();
 });
 
 /* =========================================
@@ -381,3 +382,27 @@ document.querySelectorAll('a[href^="#"]').forEach(link => {
 
   sections.forEach(s => observer.observe(s));
 })();
+
+/* =========================================
+   9. LAZY LOADING BACKGROUNDS
+   ========================================= */
+function initLazyBackgrounds() {
+  const lazyBgs = document.querySelectorAll('.lazy-bg');
+  if (!lazyBgs.length) return;
+
+  const observer = new IntersectionObserver((entries, obs) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const el = entry.target;
+        const bgUrl = el.getAttribute('data-bg');
+        if (bgUrl) {
+          el.style.backgroundImage = bgUrl;
+          el.removeAttribute('data-bg');
+        }
+        obs.unobserve(el);
+      }
+    });
+  }, { rootMargin: '200px' });
+
+  lazyBgs.forEach(el => observer.observe(el));
+}
