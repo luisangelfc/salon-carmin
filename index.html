@@ -24,6 +24,7 @@
         <a href="#nosotros">Nosotros</a>
         <a href="#salones">Salones</a>
         <a href="#eventos">Eventos</a>
+        <a href="#galeria">Galería</a>
         <a href="#paquetes">Paquetes</a>
         <a href="#contacto">Contacto</a>
       </nav>
@@ -90,7 +91,7 @@
     <div class="container">
       <p class="eyebrow center reveal">Nuestros espacios</p>
       <h2 class="section-title center reveal">Salones diseñados<br /><em>para cada momento</em></h2>
-      <div class="cards-grid cards-grid--two">
+      <div class="cards-grid">
  
         <div class="card reveal">
           <div class="card-img lazy-bg" data-bg="url('assets/images/webp/salon-imperial.webp')">
@@ -123,6 +124,24 @@
               <li>Ideal para prefiestas de XV años y cumpleaños</li>
               <li>Ambiente íntimo y acogedor</li>
               <li>Mismo estilo clásico del salón principal</li>
+            </ul>
+            <a href="#contacto" class="btn btn-gold-outline card-cta">Consultar disponibilidad</a>
+          </div>
+        </div>
+
+        <div class="card reveal">
+          <div class="card-img lazy-bg" data-bg="url('assets/images/webp/capilla.webp')">
+            <div class="card-img-overlay"></div>
+            <span class="card-badge">Hasta 80 personas</span>
+          </div>
+          <div class="card-body">
+            <h3 class="card-title"> Capilla</h3>
+            <p class="card-desc">Un espacio íntimo y solemne para ceremonias religiosas y civiles. El lugar ideal para consagrar los momentos más significativos de tu vida, rodeado de un ambiente de paz, elegancia y recogimiento.</p>
+            <ul class="card-features">
+              <li>Capacidad: hasta 80 personas</li>
+              <li>Ideal para bodas religiosas y ceremonias civiles</li>
+              <li>Ambiente solemne con acabados elegantes</li>
+              <li>Conectada directamente con nuestros salones de recepción</li>
             </ul>
             <a href="#contacto" class="btn btn-gold-outline card-cta">Consultar disponibilidad</a>
           </div>
@@ -168,23 +187,159 @@
           <h3>Cumpleaños</h3>
           <p>No importa la cifra en el pastel, sino las historias acumuladas: cumplir años es el pretexto perfecto para celebrar que lo mejor siempre está por venir.</p>
         </div>
+        <div class="evento-item reveal">
+          <div class="evento-icon">✟</div>
+          <h3>Ceremonia Religiosa</h3>
+          <p>El escenario perfecto para bodas, misas de acción de gracias de XV años, bautizos y otras celebraciones. Nuestra capilla ofrece un entorno íntimo, solemne y elegante para bendecir tus momentos más significativos.</p>
+        </div>
+        <div class="evento-item reveal">
+          <div class="evento-icon">🎈</div>
+          <h3>Fiesta infantil</h3>
+          <p>La diversión de los más pequeños en un espacio seguro y mágico. Decoración temática, área de juegos y todo lo necesario para un día inolvidable.</p>
+        </div>
       </div>
     </div>
   </section>
 
-  <!-- ===== GALERÍA STRIP ===== -->
-  <div class="galeria-strip">
-    <div class="galeria-track">
-      <div class="galeria-item lazy-bg" data-bg="url('assets/images/webp/g1.webp')"></div>
-      <div class="galeria-item lazy-bg" data-bg="url('assets/images/webp/g2.webp')"></div>
-      <div class="galeria-item lazy-bg" data-bg="url('assets/images/webp/g3.webp')"></div>
-      <div class="galeria-item lazy-bg" data-bg="url('assets/images/webp/g4.webp')"></div>
-      <div class="galeria-item lazy-bg" data-bg="url('assets/images/webp/g5.webp')"></div>
-      <div class="galeria-item lazy-bg" data-bg="url('assets/images/webp/g6.webp')"></div>
-      <!-- Duplicados para loop continuo -->
-      <div class="galeria-item lazy-bg" data-bg="url('assets/images/webp/g1.webp')"></div>
-      <div class="galeria-item lazy-bg" data-bg="url('assets/images/webp/g2.webp')"></div>
-      <div class="galeria-item lazy-bg" data-bg="url('assets/images/webp/g3.webp')"></div>
+  <!-- ===== GALERÍA ===== -->
+  <section class="section" id="galeria">
+    <div class="container">
+      <p class="eyebrow center reveal">Galería</p>
+      <h2 class="section-title center reveal">Nuestros momentos<br /><em>más especiales</em></h2>
+      
+      <!-- Filtros de Galería -->
+      <div class="galeria-filtros reveal">
+        <button class="filtro-btn activo" data-filtro="todos">Todos</button>
+        <button class="filtro-btn" data-filtro="salon">Salón Principal</button>
+        <button class="filtro-btn" data-filtro="jardin">Jardín</button>
+        <button class="filtro-btn" data-filtro="capilla">Capilla</button>
+        <button class="filtro-btn" data-filtro="infantil">Eventos Infantiles</button>
+      </div>
+
+      <!-- Masonry Grid -->
+      <div class="galeria-grid reveal">
+        <!-- Imagen 1 (Salón Principal) -->
+        <!-- NOTA: Reemplazar el src con la ruta real cuando se disponga de las fotos -->
+        <div class="galeria-item-wrapper" data-category="salon">
+          <div class="galeria-card">
+            <img src="https://picsum.photos/600/800?random=1" alt="Salón Principal decorado para boda" class="galeria-img" loading="lazy" data-desc="Elegante decoración con iluminación cálida y candelabros en el Salón Imperial.">
+            <div class="galeria-hover">
+              <span class="galeria-cat">Salón Principal</span>
+              <span class="galeria-zoom">🔍</span>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Imagen 2 (Jardín) -->
+        <!-- NOTA: Reemplazar el src con la ruta real cuando se disponga de las fotos -->
+        <div class="galeria-item-wrapper" data-category="jardin">
+          <div class="galeria-card">
+            <img src="https://picsum.photos/600/400?random=2" alt="Banquete en el Jardín" class="galeria-img" loading="lazy" data-desc="Montaje al aire libre rodeado de áreas verdes para recepciones especiales.">
+            <div class="galeria-hover">
+              <span class="galeria-cat">Jardín</span>
+              <span class="galeria-zoom">🔍</span>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Imagen 3 (Capilla) -->
+        <!-- NOTA: Reemplazar el src con la ruta real cuando se disponga de las fotos -->
+        <div class="galeria-item-wrapper" data-category="capilla">
+          <div class="galeria-card">
+            <img src="https://picsum.photos/600/500?random=3" alt="Ceremonia en la Capilla" class="galeria-img" loading="lazy" data-desc="Espacio íntimo y solemne listo para ceremonias religiosas y civiles.">
+            <div class="galeria-hover">
+              <span class="galeria-cat">Capilla</span>
+              <span class="galeria-zoom">🔍</span>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Imagen 4 (Eventos Infantiles) -->
+        <!-- NOTA: Reemplazar el src con la ruta real cuando se disponga de las fotos -->
+        <div class="galeria-item-wrapper" data-category="infantil">
+          <div class="galeria-card">
+            <img src="https://picsum.photos/600/700?random=4" alt="Mesa de dulces infantiles" class="galeria-img" loading="lazy" data-desc="Decoración temática de globos y mesa de dulces personalizada para fiestas infantiles.">
+            <div class="galeria-hover">
+              <span class="galeria-cat">Eventos Infantiles</span>
+              <span class="galeria-zoom">🔍</span>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Imagen 5 (Salón Principal) -->
+        <!-- NOTA: Reemplazar el src con la ruta real cuando se disponga de las fotos -->
+        <div class="galeria-item-wrapper" data-category="salon">
+          <div class="galeria-card">
+            <img src="https://picsum.photos/600/600?random=5" alt="Detalle de mesa Salón Principal" class="galeria-img" loading="lazy" data-desc="Arreglos florales y cristalería premium listos para los invitados.">
+            <div class="galeria-hover">
+              <span class="galeria-cat">Salón Principal</span>
+              <span class="galeria-zoom">🔍</span>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Imagen 6 (Jardín) -->
+        <!-- NOTA: Reemplazar el src con la ruta real cuando se disponga de las fotos -->
+        <div class="galeria-item-wrapper" data-category="jardin">
+          <div class="galeria-card">
+            <img src="https://picsum.photos/600/800?random=6" alt="Ceremonia al aire libre" class="galeria-img" loading="lazy" data-desc="Altar de bodas decorado con flores en nuestro jardín exterior.">
+            <div class="galeria-hover">
+              <span class="galeria-cat">Jardín</span>
+              <span class="galeria-zoom">🔍</span>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Imagen 7 (Capilla) -->
+        <!-- NOTA: Reemplazar el src con la ruta real cuando se disponga de las fotos -->
+        <div class="galeria-item-wrapper" data-category="capilla">
+          <div class="galeria-card">
+            <img src="https://picsum.photos/600/600?random=7" alt="Detalle de capilla" class="galeria-img" loading="lazy" data-desc="Acabados elegantes y ambiente de paz en nuestra capilla.">
+            <div class="galeria-hover">
+              <span class="galeria-cat">Capilla</span>
+              <span class="galeria-zoom">🔍</span>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Imagen 8 (Eventos Infantiles) -->
+        <!-- NOTA: Reemplazar el src con la ruta real cuando se disponga de las fotos -->
+        <div class="galeria-item-wrapper" data-category="infantil">
+          <div class="galeria-card">
+            <img src="https://picsum.photos/600/500?random=8" alt="Inflable y juegos infantiles" class="galeria-img" loading="lazy" data-desc="Área de diversión infantil con inflables y brincolines en zona segura.">
+            <div class="galeria-hover">
+              <span class="galeria-cat">Eventos Infantiles</span>
+              <span class="galeria-zoom">🔍</span>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Imagen 9 (Salón Principal) -->
+        <!-- NOTA: Reemplazar el src con la ruta real cuando se disponga de las fotos -->
+        <div class="galeria-item-wrapper" data-category="salon">
+          <div class="galeria-card">
+            <img src="https://picsum.photos/600/400?random=9" alt="Pista de baile Salón Principal" class="galeria-img" loading="lazy" data-desc="Gran pista de baile iluminada con ambiente festivo y DJ en vivo.">
+            <div class="galeria-hover">
+              <span class="galeria-cat">Salón Principal</span>
+              <span class="galeria-zoom">🔍</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== LIGHTBOX ===== -->
+  <div id="lightbox" class="lightbox">
+    <button class="lightbox-close" aria-label="Cerrar">&times;</button>
+    <button class="lightbox-prev" aria-label="Anterior">&#10094;</button>
+    <button class="lightbox-next" aria-label="Siguiente">&#10095;</button>
+    <div class="lightbox-content">
+      <img id="lightbox-img" src="" alt="Vista ampliada">
+      <div class="lightbox-caption">
+        <span id="lightbox-cat" class="lightbox-cat">Categoría</span>
+        <p id="lightbox-desc" class="lightbox-desc">Descripción breve de la imagen</p>
+      </div>
     </div>
   </div>
 
@@ -257,22 +412,25 @@
         <a href="#contacto" class="btn btn-primary paquete-cta" data-paquete="Paquete 3">Cotizar este paquete</a>
       </div>
 
-        <!-- <div class="paquete-card reveal">
-          <div class="paquete-header">
-            <span class="paquete-tipo">A tu medida</span>
-            <h3 class="paquete-nombre">Personalizado</h3>
-          </div>
-          <ul class="paquete-lista">
-            <li>✓ Todo lo del Premium</li>
-            <li>✓ Horas extra a elegir</li>
-            <li>✓ Menú gourmet personalizado</li>
-            <li>✓ Decoración temática completa</li>
-            <li>✓ DJ o banda en vivo</li>
-            <li>✓ Barra libre de bebidas</li>
-            <li>✓ Fotografía y video</li>
-          </ul>
-          <a href="#contacto" class="btn btn-primary paquete-cta" data-paquete="Personalizado">Diseñar mi paquete</a>
-        </div> -->
+      <div class="paquete-card reveal">
+        <div class="paquete-header">
+          <span class="paquete-tipo">Para los peques</span>
+          <h3 class="paquete-nombre">Paquete Infantil</h3>
+        </div>
+        <ul class="paquete-lista">
+          <li>✓ 5 hrs. de servicio</li>
+          <li>✓ Decoración temática a elegir</li>
+          <li>✓ Área de juegos y entretenimiento infantil</li>
+          <li>✓ Mesa de dulces y snacks</li>
+          <li>✓ Menú infantil + opción para adultos</li>
+          <li>✓ Pastel temático incluido</li>
+          <li>✓ Animador y música infantil</li>
+          <li>✓ Piñata y sorpresas para invitados</li>
+          <li>✓ Mesas, sillas, mantelería y vajilla temática</li>
+          <li>✓ Coordinador de eventos dedicado</li>
+        </ul>
+        <a href="#contacto" class="btn btn-primary paquete-cta" data-paquete="Paquete Infantil">Cotizar este paquete</a>
+      </div>
         
       </div>
       <p class="paquetes-nota reveal">💬 Los precios dependen de la fecha, el salón y el número de personas. <strong>Contáctanos y te damos una cotización sin compromiso en menos de 24 horas.</strong></p>
@@ -385,6 +543,8 @@
               <option value="Corporativo">Corporativo</option>
               <option value="Graduación">Graduación</option>
               <option value="Cumpleaños">Cumpleaños</option>
+              <option value="Ceremonia religiosa">Ceremonia religiosa</option>
+              <option value="Fiesta infantil">Fiesta infantil</option>
               <option value="Otro">Otro</option>
             </select>
           </div>
@@ -405,6 +565,7 @@
                 <option value="">Selecciona un paquete </option>
                 <option value="Básico">Básico</option>
                 <option value="Premium">Premium</option>
+                <option value="Paquete Infantil">Paquete Infantil</option>
                 <option value="Personalizado">Personalizado</option>
                 <option value="No sé aún">No sé aún</option>
               </select>
@@ -463,6 +624,7 @@
           <li><a href="#nosotros">Quiénes somos</a></li>
           <li><a href="#salones">Nuestros salones</a></li>
           <li><a href="#eventos">Tipos de eventos</a></li>
+          <li><a href="#galeria">Galería</a></li>
           <li><a href="#paquetes">Paquetes</a></li>
           <li><a href="#contacto">Contacto</a></li>
         </ul>
@@ -475,6 +637,8 @@
           <li><a href="#contacto">Bautizos</a></li>
           <li><a href="#contacto">Corporativos</a></li>
           <li><a href="#contacto">Graduaciones</a></li>
+          <li><a href="#contacto">Ceremonias religiosas</a></li>
+          <li><a href="#contacto">Fiestas infantiles</a></li>
         </ul>
       </div>
       <div class="footer-contacto">

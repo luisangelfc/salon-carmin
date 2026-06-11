@@ -26,6 +26,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initPaqueteCTAs();
   initContactForm();
   initLazyBackgrounds();
+  initGallery();
 });
 
 /* =========================================
@@ -405,4 +406,137 @@ function initLazyBackgrounds() {
   }, { rootMargin: '200px' });
 
   lazyBgs.forEach(el => observer.observe(el));
+}
+
+/* =========================================
+   10. MASONRY GALLERY & LIGHTBOX
+   ========================================= */
+function initGallery() {
+  const filtersContainer = document.querySelector('.galeria-filtros');
+  const grid = document.querySelector('.galeria-grid');
+  const lightbox = document.getElementById('lightbox');
+  if (!filtersContainer || !grid || !lightbox) return;
+
+  const filterBtns = filtersContainer.querySelectorAll('.filtro-btn');
+  const items = grid.querySelectorAll('.galeria-item-wrapper');
+  
+  // Lightbox elements
+  const lightboxImg = document.getElementById('lightbox-img');
+  const lightboxCat = document.getElementById('lightbox-cat');
+  const lightboxDesc = document.getElementById('lightbox-desc');
+  const closeBtn = lightbox.querySelector('.lightbox-close');
+  const prevBtn = lightbox.querySelector('.lightbox-prev');
+  const nextBtn = lightbox.querySelector('.lightbox-next');
+
+  let currentIndex = 0;
+  let activeCategory = 'todos';
+
+  // 1. Filtering logic
+  filterBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      // Toggle active button
+      filterBtns.forEach(b => b.classList.remove('activo'));
+      btn.classList.add('activo');
+
+      const filterValue = btn.dataset.filtro;
+      activeCategory = filterValue;
+
+      // Filter grid items
+      items.forEach(item => {
+        const isMatch = filterValue === 'todos' || item.dataset.category === filterValue;
+        if (isMatch) {
+          if (item.classList.contains('filtered-out')) {
+            item.style.display = 'inline-block';
+            // Force reflow
+            item.offsetHeight;
+            item.classList.remove('filtered-out');
+          }
+        } else {
+          item.classList.add('filtered-out');
+          // Hide after transition ends (300ms)
+          setTimeout(() => {
+            if (item.classList.contains('filtered-out')) {
+              item.style.display = 'none';
+            }
+          }, 300);
+        }
+      });
+    });
+  });
+
+  // Helper to get only visible items (matching active filter)
+  const getVisibleItems = () => {
+    return Array.from(items).filter(item => {
+      return activeCategory === 'todos' || item.dataset.category === activeCategory;
+    });
+  };
+
+  // 2. Lightbox logic
+  const openLightbox = (index) => {
+    const visibleItems = getVisibleItems();
+    if (visibleItems.length === 0) return;
+
+    // Handle bounds
+    if (index < 0) {
+      index = visibleItems.length - 1;
+    } else if (index >= visibleItems.length) {
+      index = 0;
+    }
+
+    currentIndex = index;
+    const wrapper = visibleItems[index];
+    const img = wrapper.querySelector('.galeria-img');
+    const cat = wrapper.querySelector('.galeria-cat').textContent;
+    const desc = img.getAttribute('data-desc') || img.getAttribute('alt');
+
+    // Populate and open
+    lightboxImg.src = img.src;
+    lightboxCat.textContent = cat;
+    lightboxDesc.textContent = desc;
+
+    lightbox.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  };
+
+  const closeLightbox = () => {
+    lightbox.classList.remove('open');
+    document.body.style.overflow = '';
+  };
+
+  // Click on gallery card
+  items.forEach(item => {
+    const card = item.querySelector('.galeria-card');
+    card.addEventListener('click', () => {
+      const visibleItems = getVisibleItems();
+      const idx = visibleItems.indexOf(item);
+      if (idx !== -1) {
+        openLightbox(idx);
+      }
+    });
+  });
+
+  // Lightbox control events
+  closeBtn.addEventListener('click', closeLightbox);
+  prevBtn.addEventListener('click', () => openLightbox(currentIndex - 1));
+  nextBtn.addEventListener('click', () => openLightbox(currentIndex + 1));
+
+  // Close by clicking overlay background
+  lightbox.addEventListener('click', (e) => {
+    if (e.target === lightbox || e.target.classList.contains('lightbox-content')) {
+      closeLightbox();
+    }
+  });
+
+  // Keyboard navigation
+  document.addEventListener('keydown', (e) => {
+    if (!lightbox.classList.contains('open')) return;
+
+    if (e.key === 'Escape') {
+      closeLightbox();
+    } else if (e.key === 'ArrowLeft') {
+      openLightbox(currentIndex - 1);
+    } else if (e.key === 'ArrowRight') {
+      openLightbox(currentIndex + 1);
+    }
+  });
 }
