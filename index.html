@@ -2,25 +2,28 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
   <title>Salón Carmín </title>
   <meta name="description" content="Salón de eventos premium en México. XV años, bodas, bautizos y corporativos. Espacios elegantes, servicio impecable." />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preload" as="image" href="assets/images/webp/hero.webp" fetchpriority="high">
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/styles.css" />
   <link rel="icon" href="assets/images/webp/logo.webp" type="image/webp">
 </head>
 <body>
 
+  <a class="skip-link" href="#contenido">Saltar al contenido</a>
+
   <!-- ===== NAVBAR ===== -->
   <header id="header" class="header">
     <div class="container nav-container">
-      <a href="#" class="logo">
-      <img src="assets/images/webp/logo.webp" alt="Salón Carmín logo" class="logo-img" fetchpriority="high" loading="eager">
-      <span class="logo-text">Salón <em>Carmín</em></span>
-    </a>
-      <nav class="nav-links" id="navLinks">
+      <a href="#hero" class="logo" aria-label="Salón Carmín, inicio">
+        <img src="assets/images/webp/logo.webp" alt="Salón Carmín logo" class="logo-img" fetchpriority="high" loading="eager">
+        <span class="logo-text">Salón <em>Carmín</em></span>
+      </a>
+      <nav class="nav-links" id="navLinks" aria-label="Navegación principal">
         <a href="#nosotros">Nosotros</a>
         <a href="#salones">Salones</a>
         <a href="#eventos">Eventos</a>
@@ -29,19 +32,21 @@
         <a href="#contacto">Contacto</a>
       </nav>
       <a href="#contacto" class="btn btn-nav">Cotizar ahora</a>
-      <button class="hamburger" id="hamburger" aria-label="Menú">
+      <button class="hamburger" id="hamburger" type="button" aria-label="Abrir menú" aria-controls="navLinks" aria-expanded="false">
         <span></span><span></span><span></span>
       </button>
     </div>
   </header>
 
+  <main id="contenido" tabindex="-1">
+
   <!-- ===== HERO ===== -->
-  <section class="hero" id="hero">
-    <div class="hero-bg"></div>
-    <div class="hero-overlay"></div>
+  <section class="hero" id="hero" aria-labelledby="hero-title">
+    <div class="hero-bg" aria-hidden="true"></div>
+    <div class="hero-overlay" aria-hidden="true"></div>
     <div class="hero-content">
       <p class="hero-eyebrow reveal">Desde 1991, creando momentos únicos</p>
-      <h1 class="hero-title reveal">
+      <h1 class="hero-title reveal" id="hero-title">
         El escenario perfecto<br />para tu historia
       </h1>
       <p class="hero-subtitle reveal">
@@ -94,7 +99,7 @@
       <div class="cards-grid">
  
         <div class="card reveal">
-          <div class="card-img lazy-bg" data-bg="url('assets/images/imperial/1.jpeg')">
+          <div class="card-img lazy-bg" data-bg="url('assets/images/optimized/imperial/1-1024.webp')">
             <div class="card-img-overlay"></div>
             <span class="card-badge">Hasta 400 personas</span>
           </div>
@@ -109,7 +114,7 @@
         </div>
  
         <div class="card reveal">
-          <div class="card-img lazy-bg" data-bg="url('assets/images/intimo/1.jpeg')">
+          <div class="card-img lazy-bg" data-bg="url('assets/images/optimized/intimo/1-1024.webp')">
             <div class="card-img-overlay"></div>
             <span class="card-badge">Hasta 150 personas</span>
           </div>
@@ -205,191 +210,239 @@
       <h2 class="section-title center reveal">Nuestros momentos<br /><em>más especiales</em></h2>
       
       <!-- Filtros de Galería -->
-      <div class="galeria-filtros reveal">
-        <button class="filtro-btn activo" data-filtro="todos">Todos</button>
-        <button class="filtro-btn" data-filtro="imperial">Salón Imperial</button>
-        <button class="filtro-btn" data-filtro="intimo">Salón Íntimo</button>
-        <button class="filtro-btn" data-filtro="capilla">Capilla</button>
+      <div class="galeria-filtros reveal" role="group" aria-label="Filtrar imágenes por espacio">
+        <button class="filtro-btn activo" type="button" data-filtro="todos" aria-pressed="true">Todos</button>
+        <button class="filtro-btn" type="button" data-filtro="imperial" aria-pressed="false">Salón Imperial</button>
+        <button class="filtro-btn" type="button" data-filtro="intimo" aria-pressed="false">Salón Íntimo</button>
+        <button class="filtro-btn" type="button" data-filtro="capilla" aria-pressed="false">Capilla</button>
       </div>
 
       <!-- Masonry Grid -->
       <div class="galeria-grid reveal">
         <!-- Imagen 1 (Salón Imperial 1) -->
         <div class="galeria-item-wrapper" data-category="imperial">
-          <div class="galeria-card">
-            <img src="assets/images/imperial/1.jpeg" alt="Salón Imperial decorado para banquete" class="galeria-img" loading="lazy" data-desc="Elegante montaje de banquete en el Salón Imperial Carmín, con arreglos florales altos y mantelería en tonos azul y plata.">
-            <div class="galeria-hover">
+          <button class="galeria-card" type="button" aria-haspopup="dialog">
+            <picture>
+              <source type="image/webp" srcset="assets/images/optimized/imperial/1-640.webp 640w, assets/images/optimized/imperial/1-1024.webp 1024w, assets/images/optimized/imperial/1-1920.webp 1920w" sizes="(max-width: 768px) calc(100vw - 3rem), (max-width: 1024px) calc(50vw - 2rem), calc(33vw - 2rem)">
+              <img src="assets/images/imperial/1.jpeg" width="4080" height="3072" data-full-src="assets/images/optimized/imperial/1-1920.webp" alt="Salón Imperial decorado para banquete" class="galeria-img" loading="lazy" data-desc="Elegante montaje de banquete en el Salón Imperial Carmín, con arreglos florales altos y mantelería en tonos azul y plata." decoding="async">
+            </picture>
+            <span class="galeria-hover">
               <span class="galeria-cat">Salón Imperial</span>
-              <span class="galeria-zoom">🔍</span>
-            </div>
-          </div>
+              <span class="galeria-zoom" aria-hidden="true">🔍</span>
+            </span>
+          </button>
         </div>
 
         <!-- Imagen 2 (Salón Íntimo 1) -->
         <div class="galeria-item-wrapper" data-category="intimo">
-          <div class="galeria-card">
-            <img src="assets/images/intimo/1.jpeg" alt="Salón Íntimo con pista de baile acristalada" class="galeria-img" loading="lazy" data-desc="Salón Íntimo Carmín preparado para recepción, con pista de baile azul acristalada, arreglos florales elegantes y balcón superior.">
-            <div class="galeria-hover">
+          <button class="galeria-card" type="button" aria-haspopup="dialog">
+            <picture>
+              <source type="image/webp" srcset="assets/images/optimized/intimo/1-640.webp 640w, assets/images/optimized/intimo/1-1024.webp 1024w, assets/images/optimized/intimo/1-1280.webp 1280w" sizes="(max-width: 768px) calc(100vw - 3rem), (max-width: 1024px) calc(50vw - 2rem), calc(33vw - 2rem)">
+              <img src="assets/images/intimo/1.jpeg" width="1280" height="853" data-full-src="assets/images/optimized/intimo/1-1280.webp" alt="Salón Íntimo con pista de baile acristalada" class="galeria-img" loading="lazy" data-desc="Salón Íntimo Carmín preparado para recepción, con pista de baile azul acristalada, arreglos florales elegantes y balcón superior." decoding="async">
+            </picture>
+            <span class="galeria-hover">
               <span class="galeria-cat">Salón Íntimo</span>
-              <span class="galeria-zoom">🔍</span>
-            </div>
-          </div>
+              <span class="galeria-zoom" aria-hidden="true">🔍</span>
+            </span>
+          </button>
         </div>
 
         <!-- Imagen 3 (Capilla 1) -->
         <div class="galeria-item-wrapper" data-category="capilla">
-          <div class="galeria-card">
-            <img src="assets/images/capilla/1.jpeg" alt="Letras gigantes iluminadas en la entrada de la ceremonia" class="galeria-img" loading="lazy" data-desc="Entrada de ceremonia decorada con letras gigantes iluminadas sobre piso de madera y arco triunfal en el patio de la Capilla.">
-            <div class="galeria-hover">
+          <button class="galeria-card" type="button" aria-haspopup="dialog">
+            <picture>
+              <source type="image/webp" srcset="assets/images/optimized/capilla/1-640.webp 640w, assets/images/optimized/capilla/1-1024.webp 1024w, assets/images/optimized/capilla/1-1920.webp 1920w" sizes="(max-width: 768px) calc(100vw - 3rem), (max-width: 1024px) calc(50vw - 2rem), calc(33vw - 2rem)">
+              <img src="assets/images/capilla/1.jpeg" width="4080" height="3072" data-full-src="assets/images/optimized/capilla/1-1920.webp" alt="Letras gigantes iluminadas en la entrada de la ceremonia" class="galeria-img" loading="lazy" data-desc="Entrada de ceremonia decorada con letras gigantes iluminadas sobre piso de madera y arco triunfal en el patio de la Capilla." decoding="async">
+            </picture>
+            <span class="galeria-hover">
               <span class="galeria-cat">Capilla</span>
-              <span class="galeria-zoom">🔍</span>
-            </div>
-          </div>
+              <span class="galeria-zoom" aria-hidden="true">🔍</span>
+            </span>
+          </button>
         </div>
 
         <!-- Imagen 4 (Salón Imperial 2) -->
         <div class="galeria-item-wrapper" data-category="imperial">
-          <div class="galeria-card">
-            <img src="assets/images/imperial/2.jpeg" alt="Mesa de honor en el Salón Imperial" class="galeria-img" loading="lazy" data-desc="Detalle de la mesa de honor en el Salón Imperial Carmín con iluminación romántica y flores naturales.">
-            <div class="galeria-hover">
+          <button class="galeria-card" type="button" aria-haspopup="dialog">
+            <picture>
+              <source type="image/webp" srcset="assets/images/optimized/imperial/2-640.webp 640w, assets/images/optimized/imperial/2-1024.webp 1024w, assets/images/optimized/imperial/2-1920.webp 1920w" sizes="(max-width: 768px) calc(100vw - 3rem), (max-width: 1024px) calc(50vw - 2rem), calc(33vw - 2rem)">
+              <img src="assets/images/imperial/2.jpeg" width="4080" height="3072" data-full-src="assets/images/optimized/imperial/2-1920.webp" alt="Mesa de honor en el Salón Imperial" class="galeria-img" loading="lazy" data-desc="Detalle de la mesa de honor en el Salón Imperial Carmín con iluminación romántica y flores naturales." decoding="async">
+            </picture>
+            <span class="galeria-hover">
               <span class="galeria-cat">Salón Imperial</span>
-              <span class="galeria-zoom">🔍</span>
-            </div>
-          </div>
+              <span class="galeria-zoom" aria-hidden="true">🔍</span>
+            </span>
+          </button>
         </div>
 
         <!-- Imagen 5 (Salón Íntimo 2) -->
         <div class="galeria-item-wrapper" data-category="intimo">
-          <div class="galeria-card">
-            <img src="assets/images/intimo/2.jpeg" alt="Montaje de mesa en el Salón Íntimo" class="galeria-img" loading="lazy" data-desc="Decoración y mantelería detallada en tonos oscuros y plateados en el Salón Íntimo Carmín.">
-            <div class="galeria-hover">
+          <button class="galeria-card" type="button" aria-haspopup="dialog">
+            <picture>
+              <source type="image/webp" srcset="assets/images/optimized/intimo/2-640.webp 640w, assets/images/optimized/intimo/2-1024.webp 1024w, assets/images/optimized/intimo/2-1600.webp 1600w" sizes="(max-width: 768px) calc(100vw - 3rem), (max-width: 1024px) calc(50vw - 2rem), calc(33vw - 2rem)">
+              <img src="assets/images/intimo/2.jpeg" width="1600" height="1066" data-full-src="assets/images/optimized/intimo/2-1600.webp" alt="Montaje de mesa en el Salón Íntimo" class="galeria-img" loading="lazy" data-desc="Decoración y mantelería detallada en tonos oscuros y plateados en el Salón Íntimo Carmín." decoding="async">
+            </picture>
+            <span class="galeria-hover">
               <span class="galeria-cat">Salón Íntimo</span>
-              <span class="galeria-zoom">🔍</span>
-            </div>
-          </div>
+              <span class="galeria-zoom" aria-hidden="true">🔍</span>
+            </span>
+          </button>
         </div>
 
         <!-- Imagen 6 (Capilla 2) -->
         <div class="galeria-item-wrapper" data-category="capilla">
-          <div class="galeria-card">
-            <img src="assets/images/capilla/2.jpeg" alt="Pasillo ceremonial hacia el altar" class="galeria-img" loading="lazy" data-desc="Pasillo con pétalos de rosa y sillas vestidas con moños rosas bajo un elegante arco metálico hacia el altar de la Capilla.">
-            <div class="galeria-hover">
+          <button class="galeria-card" type="button" aria-haspopup="dialog">
+            <picture>
+              <source type="image/webp" srcset="assets/images/optimized/capilla/2-640.webp 640w, assets/images/optimized/capilla/2-1024.webp 1024w, assets/images/optimized/capilla/2-1500.webp 1500w" sizes="(max-width: 768px) calc(100vw - 3rem), (max-width: 1024px) calc(50vw - 2rem), calc(33vw - 2rem)">
+              <img src="assets/images/capilla/2.jpeg" width="1500" height="1000" data-full-src="assets/images/optimized/capilla/2-1500.webp" alt="Pasillo ceremonial hacia el altar" class="galeria-img" loading="lazy" data-desc="Pasillo con pétalos de rosa y sillas vestidas con moños rosas bajo un elegante arco metálico hacia el altar de la Capilla." decoding="async">
+            </picture>
+            <span class="galeria-hover">
               <span class="galeria-cat">Capilla</span>
-              <span class="galeria-zoom">🔍</span>
-            </div>
-          </div>
+              <span class="galeria-zoom" aria-hidden="true">🔍</span>
+            </span>
+          </button>
         </div>
 
         <!-- Imagen 7 (Salón Imperial 3) -->
         <div class="galeria-item-wrapper" data-category="imperial">
-          <div class="galeria-card">
-            <img src="assets/images/imperial/3.jpeg" alt="Candelabros y techos altos del Salón Imperial" class="galeria-img" loading="lazy" data-desc="Majestuosos candelabros e iluminación indirecta que realza los finos acabados en oro y verde menta del Salón Imperial.">
-            <div class="galeria-hover">
+          <button class="galeria-card" type="button" aria-haspopup="dialog">
+            <picture>
+              <source type="image/webp" srcset="assets/images/optimized/imperial/3-640.webp 482w, assets/images/optimized/imperial/3-1024.webp 771w, assets/images/optimized/imperial/3-1920.webp 1446w" sizes="(max-width: 768px) calc(100vw - 3rem), (max-width: 1024px) calc(50vw - 2rem), calc(33vw - 2rem)">
+              <img src="assets/images/imperial/3.jpeg" width="3072" height="4080" data-full-src="assets/images/optimized/imperial/3-1920.webp" alt="Candelabros y techos altos del Salón Imperial" class="galeria-img" loading="lazy" data-desc="Majestuosos candelabros e iluminación indirecta que realza los finos acabados en oro y verde menta del Salón Imperial." decoding="async">
+            </picture>
+            <span class="galeria-hover">
               <span class="galeria-cat">Salón Imperial</span>
-              <span class="galeria-zoom">🔍</span>
-            </div>
-          </div>
+              <span class="galeria-zoom" aria-hidden="true">🔍</span>
+            </span>
+          </button>
         </div>
 
         <!-- Imagen 8 (Salón Íntimo 3) -->
         <div class="galeria-item-wrapper" data-category="intimo">
-          <div class="galeria-card">
-            <img src="assets/images/intimo/3.jpeg" alt="Mesa de honor en el Salón Íntimo" class="galeria-img" loading="lazy" data-desc="Mesa principal con centros de mesa altos en el Salón Íntimo Carmín, ideal para XV años o bodas pequeñas.">
-            <div class="galeria-hover">
+          <button class="galeria-card" type="button" aria-haspopup="dialog">
+            <picture>
+              <source type="image/webp" srcset="assets/images/optimized/intimo/3-640.webp 640w, assets/images/optimized/intimo/3-1024.webp 1024w, assets/images/optimized/intimo/3-1280.webp 1280w" sizes="(max-width: 768px) calc(100vw - 3rem), (max-width: 1024px) calc(50vw - 2rem), calc(33vw - 2rem)">
+              <img src="assets/images/intimo/3.jpeg" width="1280" height="853" data-full-src="assets/images/optimized/intimo/3-1280.webp" alt="Mesa de honor en el Salón Íntimo" class="galeria-img" loading="lazy" data-desc="Mesa principal con centros de mesa altos en el Salón Íntimo Carmín, ideal para XV años o bodas pequeñas." decoding="async">
+            </picture>
+            <span class="galeria-hover">
               <span class="galeria-cat">Salón Íntimo</span>
-              <span class="galeria-zoom">🔍</span>
-            </div>
-          </div>
+              <span class="galeria-zoom" aria-hidden="true">🔍</span>
+            </span>
+          </button>
         </div>
 
         <!-- Imagen 9 (Capilla 3) -->
         <div class="galeria-item-wrapper" data-category="capilla">
-          <div class="galeria-card">
-            <img src="assets/images/capilla/3.jpeg" alt="Vista diurna de la Capilla Carmín" class="galeria-img" loading="lazy" data-desc="Ceremonia al aire libre durante el día, mostrando la fuente de los deseos, el arco floral y la cúpula de nuestra capilla.">
-            <div class="galeria-hover">
+          <button class="galeria-card" type="button" aria-haspopup="dialog">
+            <picture>
+              <source type="image/webp" srcset="assets/images/optimized/capilla/3-640.webp 640w, assets/images/optimized/capilla/3-1024.webp 1024w, assets/images/optimized/capilla/3-1280.webp 1280w" sizes="(max-width: 768px) calc(100vw - 3rem), (max-width: 1024px) calc(50vw - 2rem), calc(33vw - 2rem)">
+              <img src="assets/images/capilla/3.jpeg" width="1280" height="853" data-full-src="assets/images/optimized/capilla/3-1280.webp" alt="Vista diurna de la Capilla Carmín" class="galeria-img" loading="lazy" data-desc="Ceremonia al aire libre durante el día, mostrando la fuente de los deseos, el arco floral y la cúpula de nuestra capilla." decoding="async">
+            </picture>
+            <span class="galeria-hover">
               <span class="galeria-cat">Capilla</span>
-              <span class="galeria-zoom">🔍</span>
-            </div>
-          </div>
+              <span class="galeria-zoom" aria-hidden="true">🔍</span>
+            </span>
+          </button>
         </div>
 
         <!-- Imagen 10 (Salón Imperial 4) -->
         <div class="galeria-item-wrapper" data-category="imperial">
-          <div class="galeria-card">
-            <img src="assets/images/imperial/4.jpeg" alt="Detalle del decorado y balcones del Salón Imperial" class="galeria-img" loading="lazy" data-desc="Elegantes escaleras y barandales de herrería artística decorados con guías florales y globos en el Salón Imperial.">
-            <div class="galeria-hover">
+          <button class="galeria-card" type="button" aria-haspopup="dialog">
+            <picture>
+              <source type="image/webp" srcset="assets/images/optimized/imperial/4-640.webp 427w, assets/images/optimized/imperial/4-1000.webp 667w" sizes="(max-width: 768px) calc(100vw - 3rem), (max-width: 1024px) calc(50vw - 2rem), calc(33vw - 2rem)">
+              <img src="assets/images/imperial/4.jpeg" width="1000" height="1500" data-full-src="assets/images/optimized/imperial/4-1000.webp" alt="Detalle del decorado y balcones del Salón Imperial" class="galeria-img" loading="lazy" data-desc="Elegantes escaleras y barandales de herrería artística decorados con guías florales y globos en el Salón Imperial." decoding="async">
+            </picture>
+            <span class="galeria-hover">
               <span class="galeria-cat">Salón Imperial</span>
-              <span class="galeria-zoom">🔍</span>
-            </div>
-          </div>
+              <span class="galeria-zoom" aria-hidden="true">🔍</span>
+            </span>
+          </button>
         </div>
 
         <!-- Imagen 11 (Salón Íntimo 4) -->
         <div class="galeria-item-wrapper" data-category="intimo">
-          <div class="galeria-card">
-            <img src="assets/images/intimo/4.jpeg" alt="Montaje clásico de mesas en Salón Íntimo" class="galeria-img" loading="lazy" data-desc="Banquete preparado con sillas Tiffany blancas y lazos negros, creando un contraste elegante en el Salón Íntimo.">
-            <div class="galeria-hover">
+          <button class="galeria-card" type="button" aria-haspopup="dialog">
+            <picture>
+              <source type="image/webp" srcset="assets/images/optimized/intimo/4-640.webp 640w, assets/images/optimized/intimo/4-1024.webp 1024w, assets/images/optimized/intimo/4-1280.webp 1280w" sizes="(max-width: 768px) calc(100vw - 3rem), (max-width: 1024px) calc(50vw - 2rem), calc(33vw - 2rem)">
+              <img src="assets/images/intimo/4.jpeg" width="1280" height="853" data-full-src="assets/images/optimized/intimo/4-1280.webp" alt="Montaje clásico de mesas en Salón Íntimo" class="galeria-img" loading="lazy" data-desc="Banquete preparado con sillas Tiffany blancas y lazos negros, creando un contraste elegante en el Salón Íntimo." decoding="async">
+            </picture>
+            <span class="galeria-hover">
               <span class="galeria-cat">Salón Íntimo</span>
-              <span class="galeria-zoom">🔍</span>
-            </div>
-          </div>
+              <span class="galeria-zoom" aria-hidden="true">🔍</span>
+            </span>
+          </button>
         </div>
 
         <!-- Imagen 12 (Salón Imperial 5) -->
         <div class="galeria-item-wrapper" data-category="imperial">
-          <div class="galeria-card">
-            <img src="assets/images/imperial/5.jpeg" alt="Pista de baile del Salón Imperial" class="galeria-img" loading="lazy" data-desc="Vista de la gran pista de baile iluminada con luces LED y pantallas para la fiesta en el Salón Imperial.">
-            <div class="galeria-hover">
+          <button class="galeria-card" type="button" aria-haspopup="dialog">
+            <picture>
+              <source type="image/webp" srcset="assets/images/optimized/imperial/5-640.webp 640w, assets/images/optimized/imperial/5-1024.webp 1024w, assets/images/optimized/imperial/5-1280.webp 1280w" sizes="(max-width: 768px) calc(100vw - 3rem), (max-width: 1024px) calc(50vw - 2rem), calc(33vw - 2rem)">
+              <img src="assets/images/imperial/5.jpeg" width="1280" height="853" data-full-src="assets/images/optimized/imperial/5-1280.webp" alt="Pista de baile del Salón Imperial" class="galeria-img" loading="lazy" data-desc="Vista de la gran pista de baile iluminada con luces LED y pantallas para la fiesta en el Salón Imperial." decoding="async">
+            </picture>
+            <span class="galeria-hover">
               <span class="galeria-cat">Salón Imperial</span>
-              <span class="galeria-zoom">🔍</span>
-            </div>
-          </div>
+              <span class="galeria-zoom" aria-hidden="true">🔍</span>
+            </span>
+          </button>
         </div>
 
         <!-- Imagen 13 (Salón Íntimo 5) -->
         <div class="galeria-item-wrapper" data-category="intimo">
-          <div class="galeria-card">
-            <img src="assets/images/intimo/5.jpeg" alt="Detalle de arreglos de flores en Salón Íntimo" class="galeria-img" loading="lazy" data-desc="Detalle de centros de mesa altos con flores blancas y cristalería premium para un banquete íntimo.">
-            <div class="galeria-hover">
+          <button class="galeria-card" type="button" aria-haspopup="dialog">
+            <picture>
+              <source type="image/webp" srcset="assets/images/optimized/intimo/5-640.webp 640w, assets/images/optimized/intimo/5-1024.webp 1024w, assets/images/optimized/intimo/5-1280.webp 1280w" sizes="(max-width: 768px) calc(100vw - 3rem), (max-width: 1024px) calc(50vw - 2rem), calc(33vw - 2rem)">
+              <img src="assets/images/intimo/5.jpeg" width="1280" height="853" data-full-src="assets/images/optimized/intimo/5-1280.webp" alt="Detalle de arreglos de flores en Salón Íntimo" class="galeria-img" loading="lazy" data-desc="Detalle de centros de mesa altos con flores blancas y cristalería premium para un banquete íntimo." decoding="async">
+            </picture>
+            <span class="galeria-hover">
               <span class="galeria-cat">Salón Íntimo</span>
-              <span class="galeria-zoom">🔍</span>
-            </div>
-          </div>
+              <span class="galeria-zoom" aria-hidden="true">🔍</span>
+            </span>
+          </button>
         </div>
 
         <!-- Imagen 14 (Salón Imperial 6) -->
         <div class="galeria-item-wrapper" data-category="imperial">
-          <div class="galeria-card">
-            <img src="assets/images/imperial/6.jpeg" alt="Salón Imperial desde el mezanine" class="galeria-img" loading="lazy" data-desc="Vista panorámica de la distribución de mesas y pista de baile desde la planta alta del Salón Imperial.">
-            <div class="galeria-hover">
+          <button class="galeria-card" type="button" aria-haspopup="dialog">
+            <picture>
+              <source type="image/webp" srcset="assets/images/optimized/imperial/6-640.webp 640w, assets/images/optimized/imperial/6-1024.webp 1024w, assets/images/optimized/imperial/6-1500.webp 1500w" sizes="(max-width: 768px) calc(100vw - 3rem), (max-width: 1024px) calc(50vw - 2rem), calc(33vw - 2rem)">
+              <img src="assets/images/imperial/6.jpeg" width="1500" height="1000" data-full-src="assets/images/optimized/imperial/6-1500.webp" alt="Salón Imperial desde el mezanine" class="galeria-img" loading="lazy" data-desc="Vista panorámica de la distribución de mesas y pista de baile desde la planta alta del Salón Imperial." decoding="async">
+            </picture>
+            <span class="galeria-hover">
               <span class="galeria-cat">Salón Imperial</span>
-              <span class="galeria-zoom">🔍</span>
-            </div>
-          </div>
+              <span class="galeria-zoom" aria-hidden="true">🔍</span>
+            </span>
+          </button>
         </div>
 
         <!-- Imagen 15 (Salón Imperial 7) -->
         <div class="galeria-item-wrapper" data-category="imperial">
-          <div class="galeria-card">
-            <img src="assets/images/imperial/7.jpeg" alt="Montaje de luces y sonido en Salón Imperial" class="galeria-img" loading="lazy" data-desc="Equipo de iluminación profesional, DJ y cabina listos para animar la celebración en el Salón Imperial.">
-            <div class="galeria-hover">
+          <button class="galeria-card" type="button" aria-haspopup="dialog">
+            <picture>
+              <source type="image/webp" srcset="assets/images/optimized/imperial/7-640.webp 640w, assets/images/optimized/imperial/7-1024.webp 1024w, assets/images/optimized/imperial/7-1500.webp 1500w" sizes="(max-width: 768px) calc(100vw - 3rem), (max-width: 1024px) calc(50vw - 2rem), calc(33vw - 2rem)">
+              <img src="assets/images/imperial/7.jpeg" width="1500" height="1000" data-full-src="assets/images/optimized/imperial/7-1500.webp" alt="Montaje de luces y sonido en Salón Imperial" class="galeria-img" loading="lazy" data-desc="Equipo de iluminación profesional, DJ y cabina listos para animar la celebración en el Salón Imperial." decoding="async">
+            </picture>
+            <span class="galeria-hover">
               <span class="galeria-cat">Salón Imperial</span>
-              <span class="galeria-zoom">🔍</span>
-            </div>
-          </div>
+              <span class="galeria-zoom" aria-hidden="true">🔍</span>
+            </span>
+          </button>
         </div>
       </div>
     </div>
   </section>
 
   <!-- ===== LIGHTBOX ===== -->
-  <div id="lightbox" class="lightbox">
-    <button class="lightbox-close" aria-label="Cerrar">&times;</button>
-    <button class="lightbox-prev" aria-label="Anterior">&#10094;</button>
-    <button class="lightbox-next" aria-label="Siguiente">&#10095;</button>
+  <div id="lightbox" class="lightbox" role="dialog" aria-modal="true" aria-label="Galería de imágenes" aria-hidden="true" tabindex="-1">
+    <button class="lightbox-close" type="button" aria-label="Cerrar galería">&times;</button>
+    <button class="lightbox-prev" type="button" aria-label="Imagen anterior">&#10094;</button>
+    <button class="lightbox-next" type="button" aria-label="Imagen siguiente">&#10095;</button>
     <div class="lightbox-content">
-      <img id="lightbox-img" src="" alt="Vista ampliada">
-      <div class="lightbox-caption">
+      <picture>
+        <source id="lightbox-source" type="image/webp" srcset="">
+        <img id="lightbox-img" src="" alt="Vista ampliada">
+      </picture>
+      <div class="lightbox-caption" aria-live="polite" aria-atomic="true">
         <span id="lightbox-cat" class="lightbox-cat">Categoría</span>
         <p id="lightbox-desc" class="lightbox-desc">Descripción breve de la imagen</p>
       </div>
@@ -572,14 +625,15 @@
 
       <div class="contacto-form reveal-right">
         <form id="contactForm" class="form" novalidate>
+          <p class="form-status" id="formStatus" role="status" aria-live="polite"></p>
           <div class="form-group">
             <label for="nombre">Nombre completo *</label>
-            <input type="text" id="nombre" name="nombre" placeholder="Tu nombre" required />
+            <input type="text" id="nombre" name="nombre" placeholder="Tu nombre" autocomplete="name" required />
           </div>
           <div class="form-row">
             <div class="form-group">
               <label for="telefono">WhatsApp / Teléfono *</label>
-              <input type="tel" id="telefono" name="telefono" placeholder="5500000000" required />
+              <input type="tel" id="telefono" name="telefono" placeholder="5500000000" autocomplete="tel" inputmode="tel" maxlength="20" required />
             </div>
             <div class="form-group">
               <label for="fecha">Fecha del evento *</label>
@@ -609,15 +663,16 @@
                 <option value="Menos de 50">Menos de 50</option>
                 <option value="50–150">50 – 150</option>
                 <option value="150–300">150 – 300</option>
-                <option value="300–500">300 – 400</option>
+                <option value="300–400">300 – 400</option>
               </select>
             </div>
             <div class="form-group">
               <label for="paquete">Paquete de interés</label>
               <select id="paquete" name="paquete">
                 <option value="">Selecciona un paquete </option>
-                <option value="Básico">Básico</option>
-                <option value="Premium">Premium</option>
+                <option value="Paquete 1">Paquete 1 · Esencial</option>
+                <option value="Paquete 2">Paquete 2 · Completo</option>
+                <option value="Paquete 3">Paquete 3 · Premium</option>
                 <option value="Paquete Infantil">Paquete Infantil</option>
                 <option value="Personalizado">Personalizado</option>
                 <option value="No sé aún">No sé aún</option>
@@ -626,7 +681,7 @@
           </div>
           <div class="form-group">
             <label for="mensaje">Cuéntanos más sobre tu evento</label>
-            <textarea id="mensaje" name="mensaje" rows="4" placeholder="Cuéntanos tu idea, gustos, o cualquier detalle especial que quieras para tu evento..."></textarea>
+            <textarea id="mensaje" name="mensaje" rows="4" maxlength="700" placeholder="Cuéntanos tu idea, gustos, o cualquier detalle especial que quieras para tu evento..."></textarea>
           </div>
           <button type="submit" class="btn btn-gold btn-submit">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
@@ -646,12 +701,13 @@
     </div>
     <div class="mapa-wrapper">
       <iframe
-        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3763.8031819737494!2d-99.0625308155982!3d19.37767304317111!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x85d1fd8b923c941b%3A0x9a2d17d458740b00!2sSalon%20Carmin!5e0!3m2!1ses!2smx!4v1775585602816!5m2!1ses!2smx" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"
-        width="100%" height="450" style="border:0;" allowfullscreen="" loading="lazy"
-        referrerpolicy="no-referrer-when-downgrade" title="Ubicación Salón Carmín">
+        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3763.8031819737494!2d-99.0625308155982!3d19.37767304317111!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x85d1fd8b923c941b%3A0x9a2d17d458740b00!2sSalon%20Carmin!5e0!3m2!1ses!2smx!4v1775585602816!5m2!1ses!2smx"
+        title="Ubicación de Salón Carmín" loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen>
       </iframe>
     </div>
   </section>
+
+  </main>
 
   <!-- ===== FOOTER ===== -->
   <footer class="footer">
@@ -660,13 +716,13 @@
         <span class="logo-text footer-logo">Salón <em>Carmín</em></span>
         <p>Creando momentos que se recuerdan para siempre desde 1991.</p>
         <div class="footer-social">
-          <a href="https://www.instagram.com/eventoscarmin/" aria-label="Instagram" target="_blank">
+          <a href="https://www.instagram.com/eventoscarmin/" aria-label="Instagram" target="_blank" rel="noopener noreferrer">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
           </a>
-          <a href="https://www.facebook.com/saloncarminfiestas/" aria-label="Facebook" target="_blank">
+          <a href="https://www.facebook.com/saloncarminfiestas/" aria-label="Facebook" target="_blank" rel="noopener noreferrer">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
           </a>
-          <a href="https://wa.me/525580773545" aria-label="WhatsApp" target="_blank">
+          <a href="https://wa.me/525580773545" aria-label="WhatsApp" target="_blank" rel="noopener noreferrer">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
           </a>
         </div>
@@ -699,7 +755,7 @@
         <p>📍 24 de Marzo de 1867 1470, Leyes de Reforma 3ra Secc, Iztapalapa, 09310 Ciudad de México, CDMX</p>
         <p>📞 +52 5580773545</p>
         <p>🕐 Lun–Dom: 9AM – 8PM</p>
-        <a href="https://wa.me/525580773545" class="btn btn-whatsapp btn-sm" target="_blank">
+        <a href="https://wa.me/525580773545" class="btn btn-whatsapp btn-sm" target="_blank" rel="noopener noreferrer">
           WhatsApp directo
         </a>
       </div>
