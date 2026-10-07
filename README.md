@@ -1,43 +1,32 @@
-# Salón Carmín — Landing Page
+# Salón Carmín
 
-![HTML5](https://img.shields.io/badge/HTML5-E34F26?style=flat&logo=html5&logoColor=white)
-![CSS3](https://img.shields.io/badge/CSS3-1572B6?style=flat&logo=css3&logoColor=white)
-![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=flat&logo=javascript&logoColor=black)
+Landing page estática para presentar los espacios y servicios de Salón Carmín y facilitar que los clientes soliciten información por WhatsApp. Está construida con HTML, CSS y JavaScript sin framework ni proceso de compilación.
 
-Landing page profesional para salón de eventos, construida con HTML5, CSS3 y JavaScript vanilla. Orientada a generación de leads y conversión directa vía WhatsApp.
+## Funcionalidad
 
----
+- Diseño mobile-first con ajustes progresivos para tabletas y pantallas grandes.
+- Navegación móvil desplegable, con cierre mediante el botón, selección de una sección o la tecla Escape.
+- Secciones informativas de salones, eventos, galería, paquetes, testimonios, contacto y ubicación.
+- Galería filtrable por Salón Imperial, Salón Íntimo y Capilla, con visor ampliado y navegación por teclado.
+- Formulario con validación en el navegador que prepara un mensaje con los datos ingresados y abre WhatsApp. La página no tiene backend ni almacena la información.
+- Imágenes WebP optimizadas, carga diferida para imágenes secundarias y animaciones que respetan la preferencia de movimiento reducido.
+- Controles y navegación con soporte para teclado y atributos accesibles.
 
-## Características
-
-- **Integración real con WhatsApp** — el formulario captura todos los datos del cliente y construye un mensaje estructurado automáticamente, enviándolo directo al número del negocio
-- **Diseño premium** — paleta negro + dorado, tipografía Cormorant Garamond + Montserrat, estilo clásico elegante
-- **Animaciones al hacer scroll** — reveal progresivo con IntersectionObserver, sin librerías externas
-- **Navbar dinámico** — transparente en el hero, sólido al hacer scroll
-- **Galería Masonry con filtros y Lightbox** — grid tipo masonry filtrable por tipo de espacio, con lightbox fullscreen, navegación por teclado y captions; reemplaza el strip infinito original
-- **Capilla para ceremonias** — sección dedicada a bodas religiosas, bautizos, misas de XV años y celebraciones litúrgicas
-- **Paquetes infantiles** — oferta específica para fiestas infantiles con decoración temática, área de juegos y mesa de dulces
-- **100% responsive** — menú hamburguesa en móvil, layouts adaptados a cada breakpoint
-- **Sin dependencias** — cero npm, cero frameworks, abre directo en el navegador
-
----
-
-## Stack
+## Tecnologías
 
 | Tecnología | Uso |
-|---|---|
-| HTML5 semántico | Estructura y accesibilidad |
-| CSS3 | Diseño, animaciones, variables, grid, flexbox, masonry con column-count |
-| JavaScript vanilla | Interactividad, validación, galería filtrable, lightbox, integración WhatsApp |
-| Google Fonts | Cormorant Garamond + Montserrat |
+| --- | --- |
+| HTML | Contenido y estructura semántica |
+| CSS | Diseño adaptable, componentes, animaciones y estilos mobile-first |
+| JavaScript | Menú, validación, galería, visor y enlace de WhatsApp |
+| WebP / JPEG | Imágenes optimizadas y recursos originales |
 
----
+La página no requiere Node.js, instalación de paquetes ni servidor de aplicación. Google Fonts y el mapa incrustado de Google Maps sí necesitan conexión a Internet.
 
-## Estructura del proyecto
+## Estructura
 
-```
+```text
 salon-carmin/
-│
 ├── index.html
 ├── css/
 │   └── styles.css
@@ -45,100 +34,26 @@ salon-carmin/
 │   └── main.js
 ├── assets/
 │   └── images/
-│       ├── salon-principal/
-│       ├── jardin/
-│       ├── capilla/
-│       ├── infantil/
-│       └── ...
+│       ├── capilla/       # Fotografías originales
+│       ├── imperial/      # Fotografías originales
+│       ├── intimo/        # Fotografías originales
+│       ├── optimized/     # Variantes WebP para la galería
+│       └── webp/          # Logo y recursos WebP del sitio
 └── README.md
 ```
 
----
+## Abrir el sitio
 
-## Cómo funciona la integración WhatsApp
+Abre `index.html` directamente en un navegador. Para publicarlo, sirve la carpeta como un sitio estático y conserva las rutas relativas de `assets/`, `css/` y `js/`.
 
-El formulario de contacto no envía emails ni necesita backend. Al hacer submit:
+## Formulario y WhatsApp
 
-1. JavaScript valida todos los campos (requeridos, teléfono válido, fecha futura)
-2. Recolecta: nombre, teléfono, tipo de evento, fecha, número de personas y paquete de interés
-3. Construye un mensaje estructurado listo para leer
-4. Redirige a `wa.me/[número]?text=[mensaje]` en una nueva pestaña
-5. El cliente solo presiona "Enviar" en WhatsApp
+Al enviar el formulario, JavaScript valida los campos, prepara un mensaje con nombre, teléfono, fecha, tipo de evento y los detalles opcionales, y abre un enlace `wa.me` con el texto codificado. La persona debe confirmar el envío desde WhatsApp. No hay servicio de correo, base de datos ni almacenamiento en el sitio.
 
-```
-¡Hola, Salón Carmín! 👋
+El número de WhatsApp usado por los enlaces y el formulario se encuentra en `index.html`; el formulario también usa la constante `CONFIG.WA_NUMBER` en `js/main.js`. Si cambia el número del negocio, actualiza ambos lugares.
 
-📋 DATOS DEL EVENTO
-• Nombre: [nombre]
-• Teléfono: [teléfono]
-• Tipo de evento: [tipo]
-• Fecha deseada: [fecha]
-• Número de personas: [personas]
-• Paquete de interés: [paquete]
+## Imágenes
 
-💬 MENSAJE ADICIONAL
-[mensaje libre]
-```
+Las fotografías originales se conservan en sus carpetas por espacio. Las variantes WebP de `assets/images/optimized/` se usan en la galería y sus imágenes ampliadas; los recursos generales, como el logo y la imagen del hero, están en `assets/images/webp/`.
 
-El coordinador recibe toda la información sin necesidad de preguntar nada.
-
-Los tipos de evento disponibles en el formulario incluyen:
-- Boda
-- XV Años
-- Graduación
-- Corporativo
-- **Ceremonia religiosa** *(nuevo)*
-- **Fiesta infantil** *(nuevo)*
-
----
-
-## Secciones de la landing
-
-El orden no es estético — es psicológico:
-
-| # | Sección | Objetivo |
-|---|---|---|
-| 1 | Hero | Impacto emocional inmediato |
-| 2 | Quiénes somos | Generar confianza y legitimidad |
-| 3 | Salones | Visualización: "yo celebro aquí" (incluye Capilla) |
-| 4 | Tipos de eventos | Validación: "este lugar es para mí" (incluye Ceremonia religiosa y Fiesta infantil) |
-| 5 | Galería | Exploración visual por espacio con filtros y lightbox |
-| 6 | Paquetes | Presentar la oferta sin precios (incluye Paquete Infantil) |
-| 7 | Testimonios | Prueba social antes de la acción |
-| 8 | Contacto + WhatsApp | Conversión |
-| 9 | Mapa | Confianza final, reducir fricción |
-
----
-
-## Galería — Masonry + Filtros + Lightbox
-
-La galería fue rediseñada para darle mayor protagonismo visual a los espacios del salón.
-
-**Filtros disponibles:**
-- Todos
-- Salón Principal
-- Jardín
-- Capilla
-- Eventos Infantiles
-
-**Comportamiento:**
-- Layout masonry con `column-count` nativo en CSS (sin Masonry.js)
-- Al cambiar de filtro: transición suave con `opacity` + `scale`
-- Clic en cualquier imagen abre el lightbox fullscreen
-- El lightbox navega solo entre las imágenes del filtro activo
-- Navegación por teclado: `ESC` cierra, `←` `→` navegan
-- Clic en el fondo también cierra el lightbox
-
----
-
-## Decisiones de diseño
-
-**Sin precios visibles** — la estrategia es llevar al cliente a WhatsApp donde el coordinador puede personalizar la cotización y vender el valor antes de hablar de números. Genera más leads aunque sean menos filtrados.
-
-**Capilla como espacio diferenciador** — se presenta tanto en la sección de Salones (espacio físico) como en Tipos de eventos (validación de uso), cubriendo dos momentos distintos del funnel de conversión.
-
-**Paquete Infantil separado** — al tener tarjeta propia en Paquetes y tipo de evento propio en el formulario, el coordinador recibe leads infantiles ya identificados y puede cotizar sin preguntas adicionales.
-
-**Vanilla JS** — proyecto construido sin frameworks para mantener el código comprensible, sin dependencias y como ejercicio de fundamentos.
-
-**CSS custom properties** — toda la paleta de colores y valores recurrentes viven en variables en `:root`, facilitando cambios globales desde un solo lugar.
+Al incorporar o reemplazar imágenes, conserva las rutas referenciadas por `index.html`, añade texto alternativo descriptivo a las imágenes informativas y mantén dimensiones explícitas para reducir cambios de diseño durante la carga.

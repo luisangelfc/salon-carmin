@@ -9,6 +9,21 @@
 
 'use strict';
 
+// Enable motion styles only when JavaScript is active. The page remains readable without it.
+document.documentElement.classList.add('js');
+
+const scrollLockReasons = new Set();
+
+function setScrollLock(reason, locked) {
+  if (locked) scrollLockReasons.add(reason);
+  else scrollLockReasons.delete(reason);
+  document.body.style.overflow = scrollLockReasons.size ? 'hidden' : '';
+}
+
+function prefersReducedMotion() {
+  return window.matchMedia?.('(prefers-reduced-motion: reduce)').matches ?? false;
+}
+
 // ── CONFIG ────────────────────────────────
 const CONFIG = {
   // ⚠️ CAMBIAR: número real de WhatsApp (código país + número sin +)
@@ -56,28 +71,32 @@ function initHamburger() {
   const navLinks  = document.getElementById('navLinks');
   if (!hamburger || !navLinks) return;
 
-  hamburger.addEventListener('click', () => {
-    const isOpen = navLinks.classList.toggle('open');
+  const setOpen = (isOpen) => {
+    navLinks.classList.toggle('open', isOpen);
     hamburger.classList.toggle('open', isOpen);
-    // Evitar scroll del body cuando el menú está abierto
-    document.body.style.overflow = isOpen ? 'hidden' : '';
+    hamburger.setAttribute('aria-expanded', String(isOpen));
+    hamburger.setAttribute('aria-label', isOpen ? 'Cerrar menú' : 'Abrir menú');
+    setScrollLock('menu', isOpen);
+    if (isOpen) navLinks.querySelector('a')?.focus();
+  };
+
+  hamburger.addEventListener('click', () => {
+    setOpen(!navLinks.classList.contains('open'));
   });
 
   // Cerrar al hacer click en cualquier link
   navLinks.querySelectorAll('a').forEach(link => {
     link.addEventListener('click', () => {
-      navLinks.classList.remove('open');
-      hamburger.classList.remove('open');
-      document.body.style.overflow = '';
+      setOpen(false);
+      hamburger.focus();
     });
   });
 
   // Cerrar con Escape
   document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape' && navLinks.classList.contains('open')) {
-      navLinks.classList.remove('open');
-      hamburger.classList.remove('open');
-      document.body.style.overflow = '';
+      setOpen(false);
+      hamburger.focus();
     }
   });
 }
@@ -88,6 +107,11 @@ function initHamburger() {
 function initScrollReveal() {
   const targets = document.querySelectorAll('.reveal, .reveal-left, .reveal-right');
   if (!targets.length) return;
+
+  if (prefersReducedMotion() || !('IntersectionObserver' in window)) {
+    targets.forEach(el => el.classList.add('visible'));
+    return;
+  }
 
   const observer = new IntersectionObserver((entries) => {
     entries.forEach((entry, i) => {
@@ -123,12 +147,16 @@ function initHeroBg() {
   bg.classList.add('loaded');
 
   // Parallax suave en desktop (desactivado en móvil por performance)
-  if (window.matchMedia('(min-width: 769px)').matches) {
+  if (!prefersReducedMotion() && window.matchMedia('(min-width: 769px)').matches) {
+    let scheduled = false;
     window.addEventListener('scroll', () => {
-      const scrolled = window.scrollY;
-      if (scrolled < window.innerHeight) {
-        bg.style.transform = `translateY(${scrolled * 0.3}px)`;
-      }
+      if (scheduled) return;
+      scheduled = true;
+      window.requestAnimationFrame(() => {
+        const scrolled = window.scrollY;
+        if (scrolled < window.innerHeight) bg.style.transform = `translate3d(0, ${scrolled * 0.3}px, 0)`;
+        scheduled = false;
+      });
     }, { passive: true });
   }
 }
@@ -142,7 +170,7 @@ function initPaqueteCTAs() {
   if (!btns.length || !selectPaquete) return;
 
   btns.forEach(btn => {
-    btn.addEventListener('click', (e) => {
+    btn.addEventListener('click', () => {
       const paquete = btn.dataset.paquete;
       if (paquete) {
         selectPaquete.value = paquete;
@@ -172,32 +200,47 @@ function initPaqueteCTAs() {
 function initContactForm() {
   const form = document.getElementById('contactForm');
   if (!form) return;
+  const dateField = form.querySelector('#fecha');
+  const status = form.querySelector('#formStatus');
+
+  if (dateField) dateField.min = getLocalDateISO();
+
+  form.querySelectorAll('input, select, textarea').forEach(field => {
+    field.addEventListener('input', () => clearFieldError(field, status));
+    field.addEventListener('change', () => clearFieldError(field, status));
+  });
 
   form.addEventListener('submit', (e) => {
     e.preventDefault();
 
-    // 1. Validar
-    if (!validateForm(form)) return;
+    if (!validateForm(form, status)) return;
 
-    // 2. Recolectar datos
     const data = recolectarDatos(form);
-
-    // 3. Construir mensaje
     const mensaje = construirMensaje(data);
-
-    // 4. Redirigir a WhatsApp
-    enviarAWhatsApp(mensaje);
+    enviarAWhatsApp(mensaje, status);
   });
 }
 
 // ── VALIDACIÓN ────────────────────────────
-function validateForm(form) {
+function getLocalDateISO() {
+  const now = new Date();
+  now.setMinutes(now.getMinutes() - now.getTimezoneOffset());
+  return now.toISOString().slice(0, 10);
+}
+
+function clearFieldError(field, status) {
+  field.classList.remove('error');
+  field.removeAttribute('aria-invalid');
+  field.removeAttribute('aria-describedby');
+  field.parentElement.querySelector(`#${field.id}-error`)?.remove();
+  if (status) status.textContent = '';
+}
+
+function validateForm(form, status) {
   const requeridos = form.querySelectorAll('[required]');
   let valido = true;
 
-  // Limpiar errores previos
-  form.querySelectorAll('.error').forEach(el => el.classList.remove('error'));
-  form.querySelectorAll('.error-msg').forEach(el => el.remove());
+  form.querySelectorAll('.error').forEach(campo => clearFieldError(campo, status));
 
   requeridos.forEach(campo => {
     const valor = campo.value.trim();
@@ -207,31 +250,32 @@ function validateForm(form) {
       error = 'Este campo es obligatorio';
     } else if (campo.type === 'tel' && !validarTelefono(valor)) {
       error = 'Ingresa un número de teléfono válido';
-    } else if (campo.type === 'date') {
-      const fecha    = new Date(valor);
-      const hoy      = new Date();
-      hoy.setHours(0, 0, 0, 0);
-      if (fecha < hoy) error = 'La fecha debe ser en el futuro';
+    } else if (campo.type === 'date' && valor < campo.min) {
+      error = 'Elige hoy o una fecha futura';
     }
 
     if (error) {
       valido = false;
       campo.classList.add('error');
+      campo.setAttribute('aria-invalid', 'true');
       const msg = document.createElement('span');
-      msg.className    = 'error-msg';
-      msg.textContent  = error;
-      msg.style.cssText = 'color:#e05252;font-size:0.72rem;margin-top:0.25rem;display:block;';
+      msg.className = 'error-msg';
+      msg.id = `${campo.id}-error`;
+      msg.textContent = error;
+      campo.setAttribute('aria-describedby', msg.id);
       campo.parentElement.appendChild(msg);
     }
   });
 
-  // Scroll al primer error
   if (!valido) {
+    if (status) status.textContent = 'Revisa los campos marcados antes de continuar.';
     const primerError = form.querySelector('.error');
     if (primerError) {
-      primerError.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      primerError.scrollIntoView({ behavior: prefersReducedMotion() ? 'auto' : 'smooth', block: 'center' });
       primerError.focus();
     }
+  } else if (status) {
+    status.textContent = '';
   }
 
   return valido;
@@ -303,42 +347,18 @@ function construirMensaje(data) {
 }
 
 // ── ENVIAR A WHATSAPP ─────────────────────
-function enviarAWhatsApp(mensaje) {
+function enviarAWhatsApp(mensaje, status) {
   const mensajeCodificado = encodeURIComponent(mensaje);
   const url               = `https://wa.me/${CONFIG.WA_NUMBER}?text=${mensajeCodificado}`;
+  if (status) status.textContent = 'Abriendo WhatsApp…';
 
-  // Feedback visual al usuario
-  mostrarConfirmacion(() => {
-    // Abrir WhatsApp en nueva pestaña
-    window.open(url, '_blank', 'noopener,noreferrer');
-  });
-}
-
-// ── CONFIRMACIÓN VISUAL ───────────────────
-function mostrarConfirmacion(callback) {
-  const btn = document.querySelector('.btn-submit');
-  if (!btn) { callback(); return; }
-
-  const textoOriginal = btn.innerHTML;
-
-  btn.innerHTML = `
-    <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
-      <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
-    </svg>
-    ¡Abriendo WhatsApp…
-  `;
-  btn.disabled = true;
-  btn.style.background = '#25D366';
-
-  setTimeout(() => {
-    callback(); // Abrir WhatsApp
-    // Restaurar botón después de 3s
-    setTimeout(() => {
-      btn.innerHTML = textoOriginal;
-      btn.disabled  = false;
-      btn.style.background = '';
-    }, 3000);
-  }, 600);
+  // Open directly from the submit gesture to avoid popup blockers.
+  const newWindow = window.open(url, '_blank');
+  if (newWindow) {
+    newWindow.opener = null;
+  } else {
+    window.location.assign(url);
+  }
 }
 
 /* =========================================
@@ -354,9 +374,9 @@ document.querySelectorAll('a[href^="#"]').forEach(link => {
 
     e.preventDefault();
     const headerHeight = document.getElementById('header')?.offsetHeight || 80;
-    const top          = target.getBoundingClientRect().top + window.scrollY - headerHeight;
+    const top = target.getBoundingClientRect().top + window.scrollY - headerHeight;
 
-    window.scrollTo({ top, behavior: 'smooth' });
+    window.scrollTo({ top, behavior: prefersReducedMotion() ? 'auto' : 'smooth' });
   });
 });
 
@@ -367,14 +387,17 @@ document.querySelectorAll('a[href^="#"]').forEach(link => {
   const sections = document.querySelectorAll('section[id], div[id]');
   const navLinks = document.querySelectorAll('.nav-links a[href^="#"]');
   if (!sections.length || !navLinks.length) return;
+  if (!('IntersectionObserver' in window)) return;
 
   const observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
         navLinks.forEach(link => {
           link.style.color = '';
+          link.removeAttribute('aria-current');
           if (link.getAttribute('href') === `#${entry.target.id}`) {
             link.style.color = 'var(--dorado)';
+            link.setAttribute('aria-current', 'location');
           }
         });
       }
@@ -391,16 +414,24 @@ function initLazyBackgrounds() {
   const lazyBgs = document.querySelectorAll('.lazy-bg');
   if (!lazyBgs.length) return;
 
+  const loadBackground = (el) => {
+    const bgUrl = el.getAttribute('data-bg');
+    if (bgUrl) {
+      el.style.backgroundImage = bgUrl;
+      el.removeAttribute('data-bg');
+    }
+  };
+
+  if (!('IntersectionObserver' in window)) {
+    lazyBgs.forEach(loadBackground);
+    return;
+  }
+
   const observer = new IntersectionObserver((entries, obs) => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
-        const el = entry.target;
-        const bgUrl = el.getAttribute('data-bg');
-        if (bgUrl) {
-          el.style.backgroundImage = bgUrl;
-          el.removeAttribute('data-bg');
-        }
-        obs.unobserve(el);
+        loadBackground(entry.target);
+        obs.unobserve(entry.target);
       }
     });
   }, { rootMargin: '200px' });
@@ -419,124 +450,132 @@ function initGallery() {
 
   const filterBtns = filtersContainer.querySelectorAll('.filtro-btn');
   const items = grid.querySelectorAll('.galeria-item-wrapper');
-  
-  // Lightbox elements
+
   const lightboxImg = document.getElementById('lightbox-img');
+  const lightboxSource = document.getElementById('lightbox-source');
   const lightboxCat = document.getElementById('lightbox-cat');
   const lightboxDesc = document.getElementById('lightbox-desc');
   const closeBtn = lightbox.querySelector('.lightbox-close');
   const prevBtn = lightbox.querySelector('.lightbox-prev');
   const nextBtn = lightbox.querySelector('.lightbox-next');
+  if (!lightboxImg || !lightboxSource || !lightboxCat || !lightboxDesc || !closeBtn || !prevBtn || !nextBtn) return;
 
   let currentIndex = 0;
   let activeCategory = 'todos';
+  let previousFocus = null;
 
-  // 1. Filtering logic
   filterBtns.forEach(btn => {
     btn.addEventListener('click', () => {
-      // Toggle active button
-      filterBtns.forEach(b => b.classList.remove('activo'));
+      filterBtns.forEach(b => {
+        b.classList.toggle('activo', b === btn);
+        b.setAttribute('aria-pressed', String(b === btn));
+      });
       btn.classList.add('activo');
-
-      const filterValue = btn.dataset.filtro;
-      activeCategory = filterValue;
-
-      // Filter grid items
+      activeCategory = btn.dataset.filtro || 'todos';
       items.forEach(item => {
-        const isMatch = filterValue === 'todos' || item.dataset.category === filterValue;
+        const isMatch = activeCategory === 'todos' || item.dataset.category === activeCategory;
+        item.setAttribute('aria-hidden', String(!isMatch));
         if (isMatch) {
-          if (item.classList.contains('filtered-out')) {
-            item.style.display = 'inline-block';
-            // Force reflow
+          if (item.hidden) {
+            item.hidden = false;
             item.offsetHeight;
-            item.classList.remove('filtered-out');
           }
+          item.classList.remove('filtered-out');
         } else {
           item.classList.add('filtered-out');
-          // Hide after transition ends (300ms)
           setTimeout(() => {
-            if (item.classList.contains('filtered-out')) {
-              item.style.display = 'none';
-            }
+            if (item.classList.contains('filtered-out')) item.hidden = true;
           }, 300);
         }
       });
     });
   });
 
-  // Helper to get only visible items (matching active filter)
   const getVisibleItems = () => {
     return Array.from(items).filter(item => {
       return activeCategory === 'todos' || item.dataset.category === activeCategory;
     });
   };
 
-  // 2. Lightbox logic
   const openLightbox = (index) => {
     const visibleItems = getVisibleItems();
     if (visibleItems.length === 0) return;
 
-    // Handle bounds
-    if (index < 0) {
-      index = visibleItems.length - 1;
-    } else if (index >= visibleItems.length) {
-      index = 0;
-    }
+    index = (index + visibleItems.length) % visibleItems.length;
 
     currentIndex = index;
     const wrapper = visibleItems[index];
     const img = wrapper.querySelector('.galeria-img');
-    const cat = wrapper.querySelector('.galeria-cat').textContent;
-    const desc = img.getAttribute('data-desc') || img.getAttribute('alt');
+    const category = wrapper.querySelector('.galeria-cat')?.textContent || '';
+    const description = img?.dataset.desc || img?.alt || '';
+    if (!img) return;
 
-    // Populate and open
-    lightboxImg.src = img.src;
-    lightboxCat.textContent = cat;
-    lightboxDesc.textContent = desc;
+    if (!lightbox.classList.contains('open')) previousFocus = document.activeElement;
+    lightboxSource.srcset = img.dataset.fullSrc || '';
+    lightboxImg.src = img.getAttribute('src') || img.currentSrc;
+    lightboxImg.alt = img.alt || 'Imagen del espacio';
+    lightboxCat.textContent = category;
+    lightboxDesc.textContent = description;
 
     lightbox.classList.add('open');
-    document.body.style.overflow = 'hidden';
+    lightbox.setAttribute('aria-hidden', 'false');
+    setScrollLock('lightbox', true);
+    closeBtn.focus();
   };
 
   const closeLightbox = () => {
+    if (!lightbox.classList.contains('open')) return;
     lightbox.classList.remove('open');
-    document.body.style.overflow = '';
+    lightbox.setAttribute('aria-hidden', 'true');
+    lightboxSource.srcset = '';
+    setScrollLock('lightbox', false);
+    if (previousFocus instanceof HTMLElement && previousFocus.isConnected) previousFocus.focus();
+    previousFocus = null;
   };
 
-  // Click on gallery card
   items.forEach(item => {
     const card = item.querySelector('.galeria-card');
+    const img = item.querySelector('.galeria-img');
+    if (!card || !img) return;
+    card.setAttribute('aria-label', `Ampliar imagen: ${img.alt}`);
     card.addEventListener('click', () => {
       const visibleItems = getVisibleItems();
       const idx = visibleItems.indexOf(item);
-      if (idx !== -1) {
-        openLightbox(idx);
-      }
+      if (idx !== -1) openLightbox(idx);
     });
   });
 
-  // Lightbox control events
   closeBtn.addEventListener('click', closeLightbox);
   prevBtn.addEventListener('click', () => openLightbox(currentIndex - 1));
   nextBtn.addEventListener('click', () => openLightbox(currentIndex + 1));
 
-  // Close by clicking overlay background
   lightbox.addEventListener('click', (e) => {
-    if (e.target === lightbox || e.target.classList.contains('lightbox-content')) {
-      closeLightbox();
-    }
+    if (e.target === lightbox) closeLightbox();
   });
 
-  // Keyboard navigation
   document.addEventListener('keydown', (e) => {
     if (!lightbox.classList.contains('open')) return;
 
     if (e.key === 'Escape') {
+      e.preventDefault();
       closeLightbox();
     } else if (e.key === 'ArrowLeft') {
+      e.preventDefault();
       openLightbox(currentIndex - 1);
     } else if (e.key === 'ArrowRight') {
+      e.preventDefault();
       openLightbox(currentIndex + 1);
+    } else if (e.key === 'Tab') {
+      const controls = Array.from(lightbox.querySelectorAll('button:not([disabled])'));
+      const first = controls[0];
+      const last = controls[controls.length - 1];
+      if (e.shiftKey && document.activeElement === first) {
+        e.preventDefault();
+        last.focus();
+      } else if (!e.shiftKey && document.activeElement === last) {
+        e.preventDefault();
+        first.focus();
+      }
     }
   });
 }
