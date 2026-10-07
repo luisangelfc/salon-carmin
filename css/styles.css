@@ -460,6 +460,23 @@ html:not(.js) .hamburger { display: none; }
   z-index: 2;
   opacity: 0.6;
 }
+
+/* En móvil, la pista debe seguir al contenido en vez de montarse sobre los CTA. */
+@media (max-width: 768px) {
+  .hero {
+    min-height: 100svh;
+    padding: calc(7rem + env(safe-area-inset-top)) 0 2rem;
+    flex-direction: column;
+  }
+
+  .hero-scroll-hint {
+    position: relative;
+    inset: auto;
+    transform: none;
+    margin-top: 1.5rem;
+  }
+}
+
 .hero-scroll-hint span {
   font-size: 0.65rem;
   letter-spacing: 0.2em;
